@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Deep Learning Demo</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <h4>Predict the value of y, given the value of x and c, y = mx + c</h4>
+    <!-- <input id="file" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" /> -->
+    <div style="margin: 10px 0;">
+        <input id="x" type="number" placeholder="x">
+        <input id="c" type="number" placeholder="c">
+        <button class="action" value="train-predict">Train and predict</button>
+        <button class="action" value="predict">Predict</button>
+    </div>
+    <input id="result" type="number" readonly placeholder="result">
+</body>
+
+</html>
+
+<script>
+    $(".action").click(function () {
+
+        var data = {
+            x: $("#x").val(),
+            c: $("#c").val(),
+            action: $(this).val(),
+        }
+
+        $.ajax({
+            url: '/train',
+            type: 'GET',
+            data: data,
+            dataType: 'json',
+            success: function (data) {
+                console.log(data)
+                $("#result").val(data.result)
+            },
+        })
+    })
+</script>
